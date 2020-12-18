@@ -9,7 +9,7 @@ const Signup = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmedPassword, setConfirmedPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
     const [redirect, setRedirect] = useState(false);
     
     const handleName = () => {
@@ -34,8 +34,17 @@ const Signup = () => {
             const newUser = { name, email, password };
 
             axios.post(`${REACT_APP_SERVER_URL}/controllers/users/register`, newUser)
+            .then(response => {
+                console.log(response);
+                setRedirect(true);
+            })
+            .catch(error => {
+                console.log(error);
+            })
         }
     }
+
+    if (redirect) return <Redirect to="/login" />
 
     return (
         <div className="row mt-4">
